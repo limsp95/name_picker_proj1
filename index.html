@@ -10,18 +10,19 @@
   <link rel="stylesheet" href="css/normalize.css" />
   <link rel="stylesheet" href="css/foundation.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
   <script src="js/vendor/custom.modernizr.js"></script>
   <script src="js/jquery-latest.min.js"></script>
 
 <style>
-#values { position:relative;font-size:600%;text-align:center;margin: 1em auto;z-index:0; }
+#values { position:relative;font-size:500%;text-align:center;margin: 1em auto;z-index:0; }
 .name { overflow:hidden;display:block; }
 #names { display:none;padding:5px; }
 #namesbox { min-height:400px;font-size:32px;color:#333;resize:none;border:1px solid #F39C12; }
 .extra { font-size:16px;margin-top:20px; }
-#result1 { background:#000;color:#fbe34b;font-size:200%;margin-top:5em;padding:25px;z-index:10;margin-top:-150px; }
-#headline { font-size:250%; }
-body { background:#F1C40F url(img/bg-noise-orange.png); }
+#result1 { background:#000;color:#fbe34b;font-size:150%;margin-top:5em;padding:25px;z-index:10;margin-top:-150px; }
+#headline { font-size:250%; padding-top:0.5em; }
+body { background:#87CEEB url(https://source.unsplash.com/user/heysupersimi) no-repeat; background-size: cover; }
 #varnote { font-size:40px;text-align:center;padding:30px; }
 .icons > input
 {
@@ -32,10 +33,11 @@ body { background:#F1C40F url(img/bg-noise-orange.png); }
 {
   position: absolute;
   right: 0;
+  top: 3em;
 }
 
 .fas {
-  font-size: 50px;
+  font-size: 3em;
   text-shadow: 2px 2px #000;
   cursor: pointer;
   user-select: none;
@@ -46,24 +48,109 @@ body { background:#F1C40F url(img/bg-noise-orange.png); }
   color: grey;
 }
 
-#clock{
+#logo{
     background-image:url('');
     background-size:cover;
     background-position: center;
-    height: 12em; width: 12em;
+    height: 10em; width: 10em;
     border: 1px solid #bbb;
     padding-left: 50%;
     padding-right: 50%;
+    /*border:0px;*/
 }
 
+/* begin base styles */
+/* https://milligram.github.io/ */
+@import url('//fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic');
+@import url('//cdn.rawgit.com/necolas/normalize.css/master/normalize.css');
+@import url('//cdn.rawgit.com/milligram/milligram/master/dist/milligram.min.css');
+
+/* end base styles */
+
+#bg-selector {
+  font-size: 1em;
+  font-style: italic;
+}
+.color {
+  width: 24px;
+  height: 24px;
+  border: 1px solid #555;
+  display: inline-block;
+  margin: 0 0 0 0.2em;
+  cursor: pointer;
+  padding: 2px;
+}
+.color img {
+  max-width: 100%;
+  max-height: 100%;
+  display: block;
+}
+.gray,
+.picker {
+  background: #eaeaea;
+}
+.floral_white {
+  background: #fffaf0;
+}
+.pink {
+  background: #ffb6c1;
+}
+#colorpicker { visibility: hidden; }
+
+.resizable {
+  background: white;
+  width: 100px;
+  height: 100px;
+  position: absolute;
+  top: 100px;
+  left: 100px;
+}
+
+.resizable .resizers{
+  width: 100%;
+  height: 100%;
+  border: 2px solid #4286f4;
+  box-sizing: border-box;
+}
+
+.resizable .resizers .resizer{
+  width: 10px;
+  height: 10px;
+  border-radius: 50%; /*magic to turn square into circle*/
+  background: white;
+  border: 2px solid #4286f4;
+  position: absolute;
+}
+
+.resizable .resizers .resizer.top-left {
+  left: -5px;
+  top: -5px;
+  cursor: nwse-resize; /*resizer cursor*/
+}
+.resizable .resizers .resizer.top-right {
+  right: -5px;
+  top: -5px;
+  cursor: nesw-resize;
+}
+.resizable .resizers .resizer.bottom-left {
+  left: -5px;
+  bottom: -5px;
+  cursor: nesw-resize;
+}
+.resizable .resizers .resizer.bottom-right {
+  right: -5px;
+  bottom: -5px;
+  cursor: nwse-resize;
+}
 </style>
 
 </head>
 <body onload="reset();">
 
-  <div class="full-head" id = 'hide' style="width:100%;background:#111 url(img/header-bg.png) repeat-x center top;border-bottom:1px solid #D35400;">
+  <div class="full-head" id = 'hide' style="width:100%;background:rgba(0,0,0,0.5);border-bottom:1px solid #D35400;">
 	<div class="row">
-		<div class="large-12 columns" style="padding-top:50px;background:#111 url(img/header-bg.png) repeat-x center top;z-index:20;">
+		<!-- <div class="large-12 columns" style="padding-top:50px;background:#111 url(https://source.unsplash.com/user/heysupersimi) repeat-x center top;z-index:20;"> -->
+      <div class="large-12 columns" style="padding-top:50px;background:rgba(0,0,0,0);z-index:20;">
 		<ul class="button-group even-4 " >
       <li><a href="index.html" class="alert button" id="reset">Reset</a></li>
 			<li><button class="button" id="list" onclick="namelist();">Name List</button></li>
@@ -71,7 +158,35 @@ body { background:#F1C40F url(img/bg-noise-orange.png); }
 			<li><button class="success button" id="go" onclick="go();">GO!</button></li>
     </ul>
     <!-- <button data-toggle-fullscreen>Toggle Fullscreen</button> -->
-		</div>
+    <div id="bg-selector" style="color: white; background:#000; width:35%; padding:1em; right:0; position:absolute;">Switch background color: 
+    <div class="color floral_white" data-value="#fffaf0"></div>
+    <div class="color gray" data-value="#eaeaea"></div>
+    <div class="color pink" data-value="#ffb6c1"></div>
+<!--   <div class="color picker" onclick="pickColor();"><img src='data:image/svg+xml;utf8,<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" preserveAspectRatio="xMinYMin"><path fill="#444444" d="M30.828 1.172c-1.562-1.562-4.095-1.562-5.657 0l-5.379 5.379-3.793-3.793-4.243 4.243 3.326 3.326-14.754 14.754c-0.252 0.252-0.358 0.592-0.322 0.921h-0.008v5c0 0.552 0.448 1 1 1h5c0 0 0.083 0 0.125 0 0.288 0 0.576-0.11 0.795-0.329l14.754-14.754 3.326 3.326 4.243-4.243-3.793-3.793 5.379-5.379c1.562-1.562 1.562-4.095 0-5.657zM5.409 30h-3.409v-3.409l14.674-14.674 3.409 3.409-14.674 14.674z"></path></svg>' /></div> -->
+  </div>
+<input id="colorpicker" type="color" />
+		</div><script>$(function() {
+  //bg color selector
+  $(".color").click(function(){
+    var color = $(this).attr("data-value");
+    $("body").css("background", color);
+  });
+  
+  //add color picker if supported
+  // if (Modernizr.inputtypes.color) {
+  //   $(".picker").css("display", 'inline-block');
+  //   var c = document.getElementById('colorpicker');
+  //   c.addEventListener('change', function(e) {
+  //     //d.innerHTML = c.value;
+  //     var color = c.value;
+  //     $("body").css("background", color);
+  //   }, false);
+  // }
+});
+// function pickColor() {
+//   $("#colorpicker").click();
+// }
+</script>
 	</div>
 	</div>
 
@@ -84,7 +199,7 @@ function readURL(){
     var file = document.getElementById("getval").files[0];
     var reader = new FileReader();
     reader.onloadend = function(){
-        document.getElementById('clock').style.backgroundImage = "url(" + reader.result + ")";        
+        document.getElementById('logo').style.backgroundImage = "url(" + reader.result + ")";        
     }
     if(file){
         reader.readAsDataURL(file);
@@ -96,11 +211,22 @@ function readURL(){
             <i class="fas fa-image" id="upload_image"></i>
         </label>
         <input type='file' id='getval' />
+
         <i onclick="myFunction(this)" class="fas fa-eye"></i><br/>
       </div>
 			
-			<div id="varnote"><div id='clock'></div></div>
-			
+			<div id="varnote"><div id='logo'></div></div>
+<!-- 			<div class='resizable'>
+  <div class='resizers'>
+    <div class='resizer top-left hide_resizer'></div>
+    <div class='resizer top-right hide'></div>
+    <div class='resizer bottom-left hide'></div>
+    <div class='resizer bottom-right hide_resizer'></div>
+  </div>
+</div>
+<button onclick="myFunction()">Fix</button> -->
+
+
       <div id="popdown">
       <div id="names" class="inbox"><textarea name="namesbox" id="namesbox"></textarea></div>
       </div>
@@ -122,15 +248,47 @@ function readURL(){
   
 <script>
 var text;
-var names = new Array('JJ',
-					  'lim',
-					  'lim2',
-					  'lim3',
-                      'Jospeh Lustberg',
-                      'Spring Luckinbill',
+var names = new Array('lim',
+                      'lim2',
+                      'lim3',
+                      'Jospeh Lustberg Lustberg',
+                      'JospehLustberg Lustberg Lustberg',
+                      '林林林',
+                      '林林林1',
+                      '林林林',
+                      '林林林1',
+                      '林林林',
+                      '林林林1',
+                      'SpringLuckinbill Luckinbill',
+                      'JospehLustberg Lustberg Lustberg',
+                      'SpringLuckinbill Luckinbill',
+                      'JospehLustberg Lustberg Lustberg',
+                      'Spring Luckinbill Luckinbill',
+                      'JospehLustberg Lustberg Lustberg',
+                      'Spring Luckinbill Luckinbill',
                       'Ciera Chionchio',
                       'Marleen Litchard',
-                      'Eldridge Brynga',
+                      'Eldridge Brynga Brynga',
+                      'Leif Dinho',
+                      'Gigi Kornblatt',
+                      'Idell Chagollan',
+                      'Michale Mcclod',
+                      'lim lim lim',
+                      'lim2 lim2 lim2',
+                      'lim3 lim3 ',
+                      'lim3 lim3 ',
+                      'Jospeh Lustberg Lustberg',
+                      'JospehLustberg Lustberg Lustberg',
+                      'SpringLuckinbill Luckinbill',
+                      'JospehLustberg Lustberg Lustberg',
+                      'SpringLuckinbill Luckinbill',
+                      'JospehLustberg Lustberg Lustberg',
+                      'Spring Luckinbill Luckinbill',
+                      'JospehLustberg Lustberg Lustberg',
+                      'Spring Luckinbill Luckinbill',
+                      'Ciera Chionchio',
+                      'Marleen Litchard',
+                      'Eldridge Brynga Brynga',
                       'Leif Dinho',
                       'Gigi Kornblatt',
                       'Idell Chagollan',
@@ -148,14 +306,47 @@ function reset(){
     }
     else   {
       var names = new Array('JJ',
-					  'lim',
-					  'lim2',
-					  'lim3',
-                      'Jospeh Lustberg',
-                      'Spring Luckinbill',
+					            'lim',
+                      'lim2',
+                      'lim3',
+                      'Jospeh Lustberg Lustberg',
+                      'JospehLustberg Lustberg Lustberg',
+                      '林林林',
+                      '林林林1',
+                      '林林林',
+                      '林林林1',
+                      '林林林',
+                      '林林林1',
+                      'SpringLuckinbill Luckinbill',
+                      'JospehLustberg Lustberg Lustberg',
+                      'SpringLuckinbill Luckinbill',
+                      'JospehLustberg Lustberg Lustberg',
+                      'Spring Luckinbill Luckinbill',
+                      'JospehLustberg Lustberg Lustberg',
+                      'Spring Luckinbill Luckinbill',
                       'Ciera Chionchio',
                       'Marleen Litchard',
-                      'Eldridge Brynga',
+                      'Eldridge Brynga Brynga',
+                      'Leif Dinho',
+                      'Gigi Kornblatt',
+                      'Idell Chagollan',
+                      'Michale Mcclod',
+                      'lim lim lim',
+                      'lim2 lim2 lim2',
+                      'lim3 lim3 ',
+                      'lim3 lim3 ',
+                      'Jospeh Lustberg Lustberg',
+                      'JospehLustberg Lustberg Lustberg',
+                      'SpringLuckinbill Luckinbill',
+                      'JospehLustberg Lustberg Lustberg',
+                      'SpringLuckinbill Luckinbill',
+                      'JospehLustberg Lustberg Lustberg',
+                      'Spring Luckinbill Luckinbill',
+                      'JospehLustberg Lustberg Lustberg',
+                      'Spring Luckinbill Luckinbill',
+                      'Ciera Chionchio',
+                      'Marleen Litchard',
+                      'Eldridge Brynga Brynga',
                       'Leif Dinho',
                       'Gigi Kornblatt',
                       'Idell Chagollan',
@@ -312,6 +503,7 @@ function removevictim(){
   $("div").remove(".name");
   $("div").remove(".extra");
   $('#headline').text('OK, done! Let\'s see who is next? Just click "GO!" button for next roll.');
+  $("#hide").show();
 }
 
 </script>
@@ -322,10 +514,11 @@ function readURL(){
     var file = document.getElementById("getval").files[0];
     var reader = new FileReader();
     reader.onloadend = function(){
-        document.getElementById('clock').style.backgroundImage = "url(" + reader.result + ")";        
+        document.getElementById('logo').style.backgroundImage = "url(" + reader.result + ")";        
     }
     if(file){
         reader.readAsDataURL(file);
+        $("#upload_image").hide();
     }else{
     }
 }
@@ -400,6 +593,99 @@ document.addEventListener('click', function (event) {
   }
 
 }, false);
+
+/*Make resizable div by Hung Nguyen*/
+function makeResizableDiv(div) {
+  const element = document.querySelector(div);
+  const resizers = document.querySelectorAll(div + ' .resizer')
+  const minimum_size = 20;
+  let original_width = 0;
+  let original_height = 0;
+  let original_x = 0;
+  let original_y = 0;
+  let original_mouse_x = 0;
+  let original_mouse_y = 0;
+  for (let i = 0;i < resizers.length; i++) {
+    const currentResizer = resizers[i];
+    currentResizer.addEventListener('mousedown', function(e) {
+      e.preventDefault()
+      original_width = parseFloat(getComputedStyle(element, null).getPropertyValue('width').replace('px', ''));
+      original_height = parseFloat(getComputedStyle(element, null).getPropertyValue('height').replace('px', ''));
+      original_x = element.getBoundingClientRect().left;
+      original_y = element.getBoundingClientRect().top;
+      original_mouse_x = e.pageX;
+      original_mouse_y = e.pageY;
+      window.addEventListener('mousemove', resize)
+      window.addEventListener('mouseup', stopResize)
+    })
+    
+    function resize(e) {
+      if (currentResizer.classList.contains('bottom-right')) {
+        const width = original_width + (e.pageX - original_mouse_x);
+        const height = original_height + (e.pageY - original_mouse_y)
+        if (width > minimum_size) {
+          element.style.width = width + 'px'
+        }
+        if (height > minimum_size) {
+          element.style.height = height + 'px'
+        }
+      }
+      else if (currentResizer.classList.contains('bottom-left')) {
+        const height = original_height + (e.pageY - original_mouse_y)
+        const width = original_width - (e.pageX - original_mouse_x)
+        if (height > minimum_size) {
+          element.style.height = height + 'px'
+        }
+        if (width > minimum_size) {
+          element.style.width = width + 'px'
+          element.style.left = original_x + (e.pageX - original_mouse_x) + 'px'
+        }
+      }
+      else if (currentResizer.classList.contains('top-right')) {
+        const width = original_width + (e.pageX - original_mouse_x)
+        const height = original_height - (e.pageY - original_mouse_y)
+        if (width > minimum_size) {
+          element.style.width = width + 'px'
+        }
+        if (height > minimum_size) {
+          element.style.height = height + 'px'
+          element.style.top = original_y + (e.pageY - original_mouse_y) + 'px'
+        }
+      }
+      else {
+        const width = original_width - (e.pageX - original_mouse_x)
+        const height = original_height - (e.pageY - original_mouse_y)
+        if (width > minimum_size) {
+          element.style.width = width + 'px'
+          element.style.left = original_x + (e.pageX - original_mouse_x) + 'px'
+        }
+        if (height > minimum_size) {
+          element.style.height = height + 'px'
+          element.style.top = original_y + (e.pageY - original_mouse_y) + 'px'
+        }
+      }
+    }
+    
+    function stopResize() {
+      window.removeEventListener('mousemove', resize)
+    }
+  }
+}
+
+makeResizableDiv('.resizable')
+
+function myFunction() {
+  var element = document.getElementsByClassName("hide_resizer")[0];
+  element.classList.remove("resizer");
+  var element1 = document.getElementsByClassName("hide_resizer")[1];
+  element1.classList.remove("resizer");
+  var element2 =
+  document.getElementsByClassName("hide_resizer")[2];
+  element2.classList.remove("resizer");
+  var element3 = document.getElementsByClassName("hide_resizer")[3];
+  element3.classList.remove("resizer");
+}
+
 </script>
 
 </body>
