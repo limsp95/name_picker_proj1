@@ -15,6 +15,9 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js" integrity="sha512-lOtDAY9KMT1WH9Fx6JSuZLHxjC8wmIBxsNFL6gJPaG7sLIVoSO9yCraWOwqLLX+txsOw0h2cHvcUJlJPvMlotw==" crossorigin="anonymous"></script>
   <script src="js/jquery-latest.min.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
+
+ <link rel="stylesheet" href="https://cdn.rawgit.com/artf/grapick/master/dist/grapick.min.css" />
+  <script src="https://cdn.rawgit.com/artf/grapick/master/dist/grapick.min.js"></script>
 <style>
 h3{
   font-family: 'Montserrat', sans-serif;
@@ -159,7 +162,7 @@ body { background:#F1C40F url(img/bg-noise-orange.png); font-family: 'Montserrat
   min-width: 160px;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   margin-top:0.5em;
-  padding: 12px 16px;
+  padding: 2em 1em;
   z-index: 1;
 }
 
@@ -187,12 +190,15 @@ body { background:#F1C40F url(img/bg-noise-orange.png); font-family: 'Montserrat
       <div class="color floral_white" data-value="#fffaf0"></div>
         <div class="color gray" data-value="#eaeaea"></div>
         <div class="color pink" data-value="#ffb6c1"></div>
-          <div class="color picker" onclick="pickColor();"><img src='data:image/svg+xml;utf8,<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" preserveAspectRatio="xMinYMin"><path fill="#444444" d="M30.828 1.172c-1.562-1.562-4.095-1.562-5.657 0l-5.379 5.379-3.793-3.793-4.243 4.243 3.326 3.326-14.754 14.754c-0.252 0.252-0.358 0.592-0.322 0.921h-0.008v5c0 0.552 0.448 1 1 1h5c0 0 0.083 0 0.125 0 0.288 0 0.576-0.11 0.795-0.329l14.754-14.754 3.326 3.326 4.243-4.243-3.793-3.793 5.379-5.379c1.562-1.562 1.562-4.095 0-5.657zM5.409 30h-3.409v-3.409l14.674-14.674 3.409 3.409-14.674 14.674z"></path></svg>' /></div></button></li>
+        
+          <div class="color picker" onclick="pickColor();"><img src='img/color-picker-icon.png' /></div><div id ="gp" style="padding-top:1em;"></div></button><input id="colorpicker" type="color"/>
+        
+      </li>
   </div>
 </div>
         
 </li>
-<input id="colorpicker" type="color" />
+
     </div><script>
 
       $(function() {
@@ -217,7 +223,19 @@ body { background:#F1C40F url(img/bg-noise-orange.png); font-family: 'Montserrat
 function pickColor() {
   $("#colorpicker").click();
 }
-</script>
+
+    //gradient picker
+  const gp = new Grapick({el: '#gp'});
+
+  // Handlers are color stops
+  gp.addHandler(0, '#ff0000');
+  gp.addHandler(100, '#0000ff');
+
+  // Do stuff on change of the gradient
+  gp.on('change', complete => {
+    document.body.style.background = gp.getSafeValue();
+  })
+  </script>
     </ul>
     
 	</div>
