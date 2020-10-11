@@ -247,6 +247,10 @@ span{
 .tooltip:hover .tooltiptext {
   visibility: visible;
 }
+#save{
+  display:none;
+  margin:auto;
+}
 
 </style>
 
@@ -395,7 +399,7 @@ function readURL(){
         </label>
         <input type='file' id='getval' />
 
-        ///////////// <i onclick="myFunction(this)" class="fas fa-eye"></i><br/> -->
+        ///////////// <i onclick="myFunction(this)" class="fas fa-eye"></i><br/>
       </div> -->
 			
 			<div id="varnote"><div id='logo'></div></div>
@@ -412,7 +416,7 @@ function readURL(){
 
 
       <div id="popdown">
-      <div id="names" class="inbox"><textarea name="namesbox" id="namesbox"></textarea></div>
+      <div id="names" class="inbox"><textarea name="namesbox" id="namesbox"></textarea><button class="roll button" id="save" onclick="save();">Save</button></div>\
       </div>
       
       <div id="values"></div>
@@ -562,6 +566,15 @@ function randOrd(){
 	return (Math.round(Math.random())-0.5); 
 }
 
+function home(){
+        $("#varnote").show();
+        $("#go").show();
+        $("#names").hide();
+        $("#namesbox").hide();
+        $('#headline').text('Lucky Draw').fadeIn();
+
+}
+
 function save(){
         $("#varnote").hide();
         $("#popdown").show();
@@ -579,13 +592,15 @@ function save(){
 function namelist(){
         $("#varnote").hide();
         $("#go").hide();
+        $("#namesbox").show();
         $('#namesbox').removeAttr('disabled','disabled');
         $('#headline').text('Please insert the guest name here.');
         $("#popdown").show();
         $("#values").hide();
         $("#names").show();
-        $('#names').append('<button class="roll button" id="save" onclick="save();">Save</button>');
-        $('body').css({"overflow-y": "visible"});
+        $('#save').css({"display": "grid"});
+        $('<div style="height:8em;"></div>').insertAfter("#save");
+        // $('body').css({"overflow-y": "visible"});
 }
 
 // does the actual animation
