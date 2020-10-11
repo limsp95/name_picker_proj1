@@ -273,16 +273,17 @@ function pickColor() {
   // Handlers are color stops
   gp.addHandler(0, '#fffaf0');
   gp.addHandler(100, '#085078');
-
+  var color_gradient;
   // Do stuff on change of the gradient
   gp.on('change', complete => {
     document.body.style.background = gp.getSafeValue();
-    $(".button").hover(function(){
-  $(this).css("color", gp.getSafeValue());
-}, function(){
-  $(this).css("color", "green");
-});
+    color_gradient = gp.getSafeValue();
   })
+  $(".button").hover(function(){
+  $(this).css("color", color_gradient);
+}, function(){
+  $(this).css("color", "white");
+});
   </script>
     </ul>
     
