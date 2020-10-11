@@ -24,12 +24,13 @@ h3{
 }  
 #values { position:relative;font-size:500%;text-align:center;margin: 1em auto;z-index:0; }
 .name { overflow:hidden;display:block; }
-#names { display:none;padding:5px; }
-#namesbox { min-height:400px;font-size:32px;color:#333;resize:none;border:1px solid #F39C12; }
+#names { display:none;padding:5px; height:100%;}
+#namesbox { min-height:320px;font-size:32px;color:#333;resize:both;border:1px solid #F39C12; }
 .extra { font-size:16px;margin-top:20px; }
 #result1 { background:#000;color:#ffde59;font-size:135%;margin-top:5em;padding:25px;z-index:10;margin-top:-150px;font-family: 'Montserrat', sans-serif; }
-#headline { font-size:250%; padding-top:0.5em; }
-body { background:#F1C40F url(img/bg-noise-orange.png); font-family: 'Montserrat', sans-serif; }
+#headline { font-size:250%; padding-top:0.5em; color:white; }
+body { background: rgb(55,196,192);
+background: linear-gradient(180deg, rgba(55,196,192,1) 0%, rgba(0,35,59,1) 100%); font-family: 'Montserrat', sans-serif; }
 #varnote { font-size:40px;text-align:center;padding:30px; }
 .icons > input
 {
@@ -59,10 +60,11 @@ body { background:#F1C40F url(img/bg-noise-orange.png); font-family: 'Montserrat
     background-image:url('');
     background-size:cover;
     background-position: center;
-    height: 10em; width: 10em;
+    height: 8em; width: 8em;
     border: 1px solid #bbb;
     padding-left: 50%;
     padding-right: 50%;
+    resize:both;
     /*border:0px;*/
 }
 
@@ -173,11 +175,12 @@ body { background:#F1C40F url(img/bg-noise-orange.png); font-family: 'Montserrat
 
 .button{
   background-color:transparent;
-  border: 3px solid white;
+  border: 3px solid #66FCF1;
+  color:#66FCF1;
 }
 
 .button:hover{
-  background-color:white;
+  background-color:#66FCF1;
   color: black;
 }
 
@@ -186,34 +189,80 @@ body { background:#F1C40F url(img/bg-noise-orange.png); font-family: 'Montserrat
   color:white;
 }
 
-.roll:hover{
-  background-color:#5da423;
-  color:white;
+.roll{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  font-size:2em;
+  color:#66FCF1;
+  text-align:center;
 }
-  
+
+.roll:hover{
+  background-color:#66FCF1;
+  color:black;
+}
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+  left:0;
+  width:5em;
+
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  margin-left:50%;
+
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+
 </style>
 
 </head>
 <body onload="reset();">
 
-  <div class="full-head" id = 'hide' style="width:100%;background:rgba(0,0,0,0.5);border-bottom:1px solid #D35400;">
+  <div class="full-head" id = 'hide' style="width:100%;background:rgba(0,0,0,1);border-bottom:1px solid #D35400;">
 	<div class="row">
 		<!-- <div class="large-12 columns" style="padding-top:50px;background:#111 url(https://source.unsplash.com/user/heysupersimi) repeat-x center top;z-index:20;"> -->
       <div class="large-12 columns" style="padding-top:50px;background:rgba(0,0,0,0);z-index:20;">
-		<ul class="button-group even-5 " >
-      <li><a href="index.html" class="reset button" id="reset">Reset</a></li>
+		<ul class="button-group even-4" >
+      <li><button class="button" id="home" onclick="home();">Home</button></li>
+      <li><a href="index.html" class="reset button" id="reset" onclick="return confirm('Are you sure you want to RESET everything?')">Reset</a></li>
 			<li><button class="button" id="list" onclick="namelist();">Name List</button></li>
-			<li><button class="button" id="save" onclick="save();">Save &amp; Update</button></li>
-			<li><button class="roll button" id="go" onclick="go();">GO!</button></li>
+			<!-- <li><button class="button" id="save" onclick="save();">Save</button></li> -->
       <li><button class="button dropdown">
         <div>
-          <span>BG color</span>
+          <span>Customise</span>
   <div class="dropdown-content">
       <div class="color floral_white" data-value="#fffaf0"></div>
         <div class="color gray" data-value="#eaeaea"></div>
         <div class="color pink" data-value="#ffb6c1"></div>
         
-          <div class="color picker" onclick="pickColor();"><img src='img/color-picker-icon.png' /></div><div id ="gp" style="padding-top:1em;"></div></button><input id="colorpicker" type="color"/>
+          <div class="color picker" onclick="pickColor();"><img src='img/color-picker-icon.png' /></div><div id ="gp" style="padding-top:1em;"></div>
+        <div class="" style="padding-top:1em;">
+        <label for="getval">
+            <span style="padding:0.2em;">Upload logo / theme picture</span><!-- <i class="fas fa-image" id="upload_image"></i> -->
+        </label>
+        <input type='file' id='getval' />
+
+        <!-- <i onclick="myFunction(this)" class="fas fa-eye"></i><br/> -->
+      </div>
+    </button><input id="colorpicker" type="color"/>
+
         
       </li>
   </div>
@@ -239,12 +288,12 @@ body { background:#F1C40F url(img/bg-noise-orange.png); font-family: 'Montserrat
   $(".color").click(function(){
     var color = $(this).attr("data-value");
     $("body").css("background", color);
-      $(".button").hover(function(){
-  $(this).css("color", color);
-}, function(){
-  $(this).css("color", "white");
-});
-  });
+//       $(".button").hover(function(){
+//   $(this).css("color", color);
+// }, function(){
+//   $(this).css("color", "#66FCF1");
+ });
+   }); 
   
   
   //add color picker if supported
@@ -255,14 +304,15 @@ body { background:#F1C40F url(img/bg-noise-orange.png); font-family: 'Montserrat
       //d.innerHTML = c.value;
       var color = c.value;
       $("body").css("background", color);
-      $(".button").hover(function(){
-  $(this).css("color", color);
-}, function(){
-  $(this).css("color", "white");
+//       $(".button").hover(function(){
+//   $(this).css("color", color);
+// }, function(){
+//   $(this).css("color", "#66FCF1");
+// });
+//     }, false);
+//   }
 });
-    }, false);
-  }
-});
+};
 function pickColor() {
   $("#colorpicker").click();
 }
@@ -278,12 +328,12 @@ function pickColor() {
   gp.on('change', complete => {
     document.body.style.background = gp.getSafeValue();
     color_gradient = gp.getSafeValue();
-  })
-  $(".button").hover(function(){
-  $(this).css("color", "black");
-}, function(){
-  $(this).css("color", "white");
-});
+  });
+//   $(".button").hover(function(){
+//   $(this).css("color", "black");
+// }, function(){
+//   $(this).css("color", "white");
+// });
   </script>
     </ul>
     
@@ -292,7 +342,7 @@ function pickColor() {
 
 	<div class="row">
 		<div class="large-12 columns">
-			<h3 style="text-align:center;margin-top:30px;" id="headline">Let's see who is The Lucky One?</h3>
+			<h3 style="text-align:center;margin-top:30px;" id="headline">Lucky Draw</h3>
 			<script>var el = document.getElementById('getval');
   if(el){el.addEventListener('change', readURL, true);}
 function readURL(){
@@ -306,16 +356,17 @@ function readURL(){
     }else{
     }
 }</script>
-			<div class="icons">
+			<!-- <div class="icons">
         <label for="getval">
             <i class="fas fa-image" id="upload_image"></i>
         </label>
         <input type='file' id='getval' />
 
-        <!-- <i onclick="myFunction(this)" class="fas fa-eye"></i><br/> -->
-      </div>
+        ///////////// <i onclick="myFunction(this)" class="fas fa-eye"></i><br/> -->
+      </div> -->
 			
 			<div id="varnote"><div id='logo'></div></div>
+      <div><button class="roll button" id="go" onclick="go();">GO!</button></li></div>
 <!-- 			<div class='resizable'>
   <div class='resizers'>
     <div class='resizer top-left hide_resizer'></div>
@@ -482,6 +533,7 @@ function save(){
         $("#varnote").hide();
         $("#popdown").show();
         $("#values").hide();
+        $("#go").hide();
         $("div").remove("#result1");
         savenames = $("#namesbox").val();
         savenames = savenames.replace(/\n\r?/g, '101');
@@ -493,17 +545,20 @@ function save(){
 
 function namelist(){
         $("#varnote").hide();
+        $("#go").hide();
         $('#namesbox').removeAttr('disabled','disabled');
-        $('#headline').text('Configure name list');
+        $('#headline').text('Please insert the guest name here.');
         $("#popdown").show();
         $("#values").hide();
         $("#names").show();
+        $('#names').append('<button class="roll button" id="save" onclick="save();">Save</button>');
         $('body').css({"overflow-y": "visible"});
 }
 
 // does the actual animation
 function go(){
   $("#upload_image").hide();
+  $("#go").hide();
   document.documentElement.requestFullscreen();
   $("#varnote").hide();
   $("#hide").hide();
@@ -575,7 +630,7 @@ function standout(text){
         $('#result1').removeClass('name');
         $('.name').animate({opacity: .25});
         $('#result1').animate({height: '+=80px'});
-        $('#result1').append('<div class="extra"><a class="small alert button" href="#" onClick="removevictim();">Remove name from list</a></div>');
+        $('#result1').append('<div class="extra"><a class="button tooltip" href="#" onClick="removevictim();"><i class="fa fa-arrow-right" aria-hidden="true"></i><span class="tooltiptext">Back to home for next roll</span></a></div>');
         $('#go').removeAttr('disabled','disabled');
         $('#list').removeAttr('disabled','disabled');
         $('#save').removeAttr('disabled','disabled');
@@ -600,10 +655,15 @@ function removevictim(){
   $('#result1').fadeOut(1000, function(){
     $("div").remove("#result1");
   });
+
   $("div").remove(".name");
   $("div").remove(".extra");
   $('#headline').text('OK, done! Let\'s see who is next? Just click "GO!" button for next roll.');
-  $("#hide").show();
+  $("#hide").hide();
+  $("#varnote").show();
+  $("#go").show ();
+  $('<div style="height:8em;"></div>').insertAfter("#go");
+  $('#headline').slideDown();
 }
 
 </script>
