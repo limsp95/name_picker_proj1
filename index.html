@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
   <script src="js/vendor/custom.modernizr.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js" integrity="sha512-lOtDAY9KMT1WH9Fx6JSuZLHxjC8wmIBxsNFL6gJPaG7sLIVoSO9yCraWOwqLLX+txsOw0h2cHvcUJlJPvMlotw==" crossorigin="anonymous"></script>
   <script src="js/jquery-latest.min.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
 <style>
@@ -23,9 +24,9 @@ h3{
 #names { display:none;padding:5px; }
 #namesbox { min-height:400px;font-size:32px;color:#333;resize:none;border:1px solid #F39C12; }
 .extra { font-size:16px;margin-top:20px; }
-#result1 { background:#000;color:#ffde59;font-size:150%;margin-top:5em;padding:25px;z-index:10;margin-top:-150px;font-family: 'Montserrat', sans-serif; }
+#result1 { background:#000;color:#ffde59;font-size:135%;margin-top:5em;padding:25px;z-index:10;margin-top:-150px;font-family: 'Montserrat', sans-serif; }
 #headline { font-size:250%; padding-top:0.5em; }
-body { background:#87CEEB url(https://source.unsplash.com/user/heysupersimi) no-repeat; background-size: cover; font-family: 'Montserrat', sans-serif; }
+body { background:#F1C40F url(img/bg-noise-orange.png); font-family: 'Montserrat', sans-serif; }
 #varnote { font-size:40px;text-align:center;padding:30px; }
 .icons > input
 {
@@ -146,6 +147,25 @@ body { background:#87CEEB url(https://source.unsplash.com/user/heysupersimi) no-
   bottom: -5px;
   cursor: nwse-resize;
 }
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  margin-top:0.5em;
+  padding: 12px 16px;
+  z-index: 1;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
 </style>
 
 </head>
@@ -155,42 +175,51 @@ body { background:#87CEEB url(https://source.unsplash.com/user/heysupersimi) no-
 	<div class="row">
 		<!-- <div class="large-12 columns" style="padding-top:50px;background:#111 url(https://source.unsplash.com/user/heysupersimi) repeat-x center top;z-index:20;"> -->
       <div class="large-12 columns" style="padding-top:50px;background:rgba(0,0,0,0);z-index:20;">
-		<ul class="button-group even-4 " >
+		<ul class="button-group even-5 " >
       <li><a href="index.html" class="alert button" id="reset">Reset</a></li>
 			<li><button class="button" id="list" onclick="namelist();">Name List</button></li>
 			<li><button class="button" id="save" onclick="save();">Save &amp; Update</button></li>
 			<li><button class="success button" id="go" onclick="go();">GO!</button></li>
-    </ul>
-    <!-- <button data-toggle-fullscreen>Toggle Fullscreen</button> -->
-    <div id="bg-selector" style="color: white; background:#000; width:35%; padding:1em; right:0; position:absolute;">Switch background color: 
-    <div class="color floral_white" data-value="#fffaf0"></div>
-    <div class="color gray" data-value="#eaeaea"></div>
-    <div class="color pink" data-value="#ffb6c1"></div>
-<!--   <div class="color picker" onclick="pickColor();"><img src='data:image/svg+xml;utf8,<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" preserveAspectRatio="xMinYMin"><path fill="#444444" d="M30.828 1.172c-1.562-1.562-4.095-1.562-5.657 0l-5.379 5.379-3.793-3.793-4.243 4.243 3.326 3.326-14.754 14.754c-0.252 0.252-0.358 0.592-0.322 0.921h-0.008v5c0 0.552 0.448 1 1 1h5c0 0 0.083 0 0.125 0 0.288 0 0.576-0.11 0.795-0.329l14.754-14.754 3.326 3.326 4.243-4.243-3.793-3.793 5.379-5.379c1.562-1.562 1.562-4.095 0-5.657zM5.409 30h-3.409v-3.409l14.674-14.674 3.409 3.409-14.674 14.674z"></path></svg>' /></div> -->
+      <li><button class="button dropdown">
+        <div>
+          <span>BG color</span>
+  <div class="dropdown-content">
+      <div class="color floral_white" data-value="#fffaf0"></div>
+        <div class="color gray" data-value="#eaeaea"></div>
+        <div class="color pink" data-value="#ffb6c1"></div>
+          <div class="color picker" onclick="pickColor();"><img src='data:image/svg+xml;utf8,<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" preserveAspectRatio="xMinYMin"><path fill="#444444" d="M30.828 1.172c-1.562-1.562-4.095-1.562-5.657 0l-5.379 5.379-3.793-3.793-4.243 4.243 3.326 3.326-14.754 14.754c-0.252 0.252-0.358 0.592-0.322 0.921h-0.008v5c0 0.552 0.448 1 1 1h5c0 0 0.083 0 0.125 0 0.288 0 0.576-0.11 0.795-0.329l14.754-14.754 3.326 3.326 4.243-4.243-3.793-3.793 5.379-5.379c1.562-1.562 1.562-4.095 0-5.657zM5.409 30h-3.409v-3.409l14.674-14.674 3.409 3.409-14.674 14.674z"></path></svg>' /></div></button></li>
   </div>
+</div>
+        
+</li>
 <input id="colorpicker" type="color" />
-		</div><script>$(function() {
+    </div><script>
+
+      $(function() {
   //bg color selector
   $(".color").click(function(){
     var color = $(this).attr("data-value");
     $("body").css("background", color);
   });
   
+  
   //add color picker if supported
-  // if (Modernizr.inputtypes.color) {
-  //   $(".picker").css("display", 'inline-block');
-  //   var c = document.getElementById('colorpicker');
-  //   c.addEventListener('change', function(e) {
-  //     //d.innerHTML = c.value;
-  //     var color = c.value;
-  //     $("body").css("background", color);
-  //   }, false);
-  // }
+  if (Modernizr.inputtypes.color) {
+    $(".picker").css("display", 'inline-block');
+    var c = document.getElementById('colorpicker');
+    c.addEventListener('change', function(e) {
+      //d.innerHTML = c.value;
+      var color = c.value;
+      $("body").css("background", color);
+    }, false);
+  }
 });
-// function pickColor() {
-//   $("#colorpicker").click();
-// }
+function pickColor() {
+  $("#colorpicker").click();
+}
 </script>
+    </ul>
+    
 	</div>
 	</div>
 
@@ -216,7 +245,7 @@ function readURL(){
         </label>
         <input type='file' id='getval' />
 
-        <i onclick="myFunction(this)" class="fas fa-eye"></i><br/>
+        <!-- <i onclick="myFunction(this)" class="fas fa-eye"></i><br/> -->
       </div>
 			
 			<div id="varnote"><div id='logo'></div></div>
@@ -547,21 +576,21 @@ if (!document.exitFullscreen) {
   document.exitFullscreen = document.mozExitFullscreen || document.webkitExitFullscreen || document.msExitFullscreen;
 }
 
-function myFunction(x) {
+// function myFunction(x) {
 
-  if (document.fullscreenElement) {
-    $("#hide").show();
-    document.exitFullscreen();
-    x.classList.toggle("fa-eye-slash");
+//   if (document.fullscreenElement) {
+//     $("#hide").show();
+//     document.exitFullscreen();
+//     x.classList.toggle("fa-eye-slash");
     
-  } else {
+//   } else {
     
-    $("#hide").hide();
-    x.classList.toggle("fa-eye-slash");
-    document.documentElement.requestFullscreen();
-  }
+//     $("#hide").hide();
+//     x.classList.toggle("fa-eye-slash");
+//     document.documentElement.requestFullscreen();
+//   }
 
-}
+// }
 
 /**
  * document.fullscreenElement polyfill
