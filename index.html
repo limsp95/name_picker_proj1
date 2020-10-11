@@ -228,8 +228,8 @@ function pickColor() {
   const gp = new Grapick({el: '#gp'});
 
   // Handlers are color stops
-  gp.addHandler(0, '#085078');
-  gp.addHandler(100, '#fffaf0');
+  gp.addHandler(0, '#fffaf0');
+  gp.addHandler(100, '#085078');
 
   // Do stuff on change of the gradient
   gp.on('change', complete => {
