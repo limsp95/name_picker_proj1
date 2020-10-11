@@ -103,7 +103,7 @@ body { background:#F1C40F url(img/bg-noise-orange.png); font-family: 'Montserrat
 .pink {
   background: #ffb6c1;
 }
-#colorpicker { visibility: hidden; }
+#colorpicker { visibility: hidden;}
 
 .resizable {
   background: white;
@@ -228,8 +228,8 @@ function pickColor() {
   const gp = new Grapick({el: '#gp'});
 
   // Handlers are color stops
-  gp.addHandler(0, '#ff0000');
-  gp.addHandler(100, '#0000ff');
+  gp.addHandler(0, '#085078');
+  gp.addHandler(100, '#fffaf0');
 
   // Do stuff on change of the gradient
   gp.on('change', complete => {
