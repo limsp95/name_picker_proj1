@@ -28,7 +28,7 @@ h3{
 #namesbox { min-height:320px;font-size:32px;color:#333;resize:both;border:1px solid #F39C12; }
 .extra { font-size:16px;margin-top:20px; }
 #result1 { background:#000;color:#ffde59;font-size:135%;margin-top:5em;padding:25px;z-index:10;margin-top:-150px;font-family: 'Montserrat', sans-serif; }
-#headline { font-size:250%; padding-top:0.5em; color:white; }
+#headline { font-size:250%; padding-top:0.5em;}
 body { background: rgb(55,196,192);
 background: linear-gradient(180deg, rgba(55,196,192,1) 0%, rgba(0,35,59,1) 100%); font-family: 'Montserrat', sans-serif; }
 #varnote { font-size:40px;text-align:center;padding:30px; }
@@ -82,8 +82,8 @@ background: linear-gradient(180deg, rgba(55,196,192,1) 0%, rgba(0,35,59,1) 100%)
   font-style: italic;
 }
 .color {
-  width: 24px;
-  height: 24px;
+  width: 1.5em;
+  height: 1.5em;
   border: 1px solid #555;
   display: inline-block;
   margin: 0 0 0 0.2em;
@@ -105,6 +105,20 @@ background: linear-gradient(180deg, rgba(55,196,192,1) 0%, rgba(0,35,59,1) 100%)
 .pink {
   background: #ffb6c1;
 }
+
+.class1 { color:#eaeaea; }
+.class2 { color:#333333; }
+.class3 { color:#ffb6c1; }
+.class4 { color:#9397E6; }
+.class5 { color:#ABAEE6; }
+.class6 { color:#E6D593; }
+.class7 { color:#FFD700; }
+.class8 { color:#19BBFF; }
+.class9 { color:#FFBE00; }
+.class10 { color:#FF8E0D; }
+.class11 { color:#FF5201; }
+.class12 { color:#DE4043; }
+
 #colorpicker { visibility: hidden;}
 
 .resizable {
@@ -166,11 +180,15 @@ background: linear-gradient(180deg, rgba(55,196,192,1) 0%, rgba(0,35,59,1) 100%)
   margin-top:0.5em;
   padding: 2em 1em;
   z-index: 1;
+  border-bottom: #00233b 5px solid;
 }
 
 .dropdown:hover .dropdown-content {
   display: block;
-  color:black;
+}
+
+span{
+  color:#00233b;
 }
 
 .button{
@@ -245,24 +263,39 @@ background: linear-gradient(180deg, rgba(55,196,192,1) 0%, rgba(0,35,59,1) 100%)
 			<li><button class="button" id="list" onclick="namelist();">Name List</button></li>
 			<!-- <li><button class="button" id="save" onclick="save();">Save</button></li> -->
       <li><button class="button dropdown">
-        <div>
-          <span>Customise</span>
+      Customise
   <div class="dropdown-content">
-      <div class="color floral_white" data-value="#fffaf0"></div>
+      <span style="padding:0.2em;">Upload logo / theme picture</span><br/> 
+      <div class="" style="padding-top:1em;">
+        <div class="color floral_white" data-value="#fffaf0"></div>
         <div class="color gray" data-value="#eaeaea"></div>
         <div class="color pink" data-value="#ffb6c1"></div>
+      
         
           <div class="color picker" onclick="pickColor();"><img src='img/color-picker-icon.png' /></div><div id ="gp" style="padding-top:1em;"></div>
+          </div>
         <div class="" style="padding-top:1em;">
+          <span style="padding:0.2em;">Upload logo / theme picture</span>
         <label for="getval">
-            <span style="padding:0.2em;">Upload logo / theme picture</span><!-- <i class="fas fa-image" id="upload_image"></i> -->
+            <!-- <i class="fas fa-image" id="upload_image"></i> -->
         </label>
-        <input type='file' id='getval' />
-
+        <input style="margin-top:1em;"type='file' id='getval' />
         <!-- <i onclick="myFunction(this)" class="fas fa-eye"></i><br/> -->
-      </div>
+        </div>
+        <div class="" style="padding-top:1em;">
+        <span style="padding:0.2em;">Click to toggle headline color</span><br/>
+        <div class="color" style="margin-top:1em;" id="toggle_font_color"></div></div>
+      
     </button><input id="colorpicker" type="color"/>
+        
+        <script>$("#toggle_font_color").click(function(){
+  $('#headline').each(function(){
+    var classes = ['class1','class2','class3','class4','class5','class6','class7','class8','class9','class10','class11','class12'];
+    this.className = classes[($.inArray(this.className, classes)+1)%classes.length];
+    $('#toggle_font_color').css("background", $(this).css("color"));
+  });
 
+});</script>
         
       </li>
   </div>
