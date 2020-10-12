@@ -27,7 +27,7 @@ h3{
 #names { display:none;padding:5px; height:100%;}
 #namesbox { min-height:320px;font-size:32px;color:#333;resize:both;border:1px solid #F39C12; }
 .extra { font-size:16px;margin-top:20px; }
-#result1 { background:#000;color:#ffde59;font-size:135%;margin-top:5em;padding:25px;z-index:10;margin-top:-150px;font-family: 'Montserrat', sans-serif; }
+#result1 { background:#000;color:#ffde59;font-size:135%;margin-top:8em;padding:25px;z-index:10;margin-top:-150px;font-family: 'Montserrat', sans-serif; }
 #headline { font-size:250%; padding-top:0.35em;}
 body { background: rgb(55,196,192);
 background: linear-gradient(180deg, rgba(55,196,192,1) 0%, rgba(0,35,59,1) 100%); font-family: 'Montserrat', sans-serif; }
@@ -714,20 +714,19 @@ function removevictim(){
 	}
 	$('#namesbox').val("");
   $('#namesbox').val(nameupdated);
-  $('#result1').html("Removed");
-  $('#result1').fadeOut(1000, function(){
+  // $('#result1').html("Removed");
+  // $('#result1').fadeOut(1000, function(){
     $("div").remove("#result1");
-  });
+  // });
 
   $("div").remove(".name");
   $("div").remove(".extra");
   $('#headline').text('OK, done! Let\'s see who is next? Just click "GO!" button for next roll.');
-  $("#hide").hide();
   $("#varnote").show();
   // $('<div id="space" style="height:8em;"></div>').insertAfter("#go");
   $('#headline').slideDown();
 
-  $("#go").show().slideUp( 300 ).delay( 800 ).fadeIn( 400 );
+  $("#go").show().slideUp( 500 ).delay( 200 ).slideDown( 500 );
   $("#space_go").show();
 }
 
