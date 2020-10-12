@@ -297,6 +297,9 @@ span{
     var classes = ['class1','class2','class3','class4','class5','class6','class7','class8','class9','class10','class11','class12'];
     this.className = classes[($.inArray(this.className, classes)+1)%classes.length];
     $('#toggle_font_color').css("background", $(this).css("color"));
+    // $('#name').className = classes[($.inArray(this.className, classes)+1)%classes.length];
+    // $("[id*='result']").css("color", $(this).css("color"));
+    $('#name').css("background", $('#headline').css("color"));
   });
 
 });</script>
