@@ -28,7 +28,7 @@ h3{
 #namesbox { min-height:320px;font-size:32px;color:#333;resize:both;border:1px solid #F39C12; }
 .extra { font-size:16px;margin-top:20px; }
 #result1 { background:#000;color:#ffde59;font-size:135%;margin-top:5em;padding:25px;z-index:10;margin-top:-150px;font-family: 'Montserrat', sans-serif; }
-#headline { font-size:250%; padding-top:0.5em;}
+#headline { font-size:250%; padding-top:0.35em;}
 body { background: rgb(55,196,192);
 background: linear-gradient(180deg, rgba(55,196,192,1) 0%, rgba(0,35,59,1) 100%); font-family: 'Montserrat', sans-serif; }
 #varnote { font-size:40px;text-align:center;padding:30px; }
@@ -256,6 +256,7 @@ span{
   display:none;
   right: 0;
   position: absolute;
+  font-size:1em;
 }
 
 </style>
@@ -412,7 +413,7 @@ function readURL(){
 			
 			<div id="varnote"><div id='logo'></div></div>
       <div><button class="roll button" id="go" onclick="go();">GO!</button></li></div>
-      <div id="space" style="height:8em;"></div>
+      <div id="space_go" style="height:8em;"></div>
 <!-- 			<div class='resizable'>
   <div class='resizers'>
     <div class='resizer top-left hide_resizer'></div>
@@ -426,7 +427,7 @@ function readURL(){
 
       <div id="popdown">
       <div id="names" class="inbox"><textarea name="namesbox" id="namesbox"></textarea><button class="roll button" id="save" onclick="save();">Save</button></div>
-      <div id="space" style="height:8em;"></div>
+      <div id="space_save" style="height:5em;"></div>
       </div>
       
       <div id="values"></div>
@@ -601,6 +602,7 @@ function save(){
 
 function namelist(){
         $("#varnote").hide();
+        $("#space_go").hide();
         $("#go").hide();
         $("#namesbox").show();
         $('#namesbox').removeAttr('disabled','disabled');
@@ -722,9 +724,11 @@ function removevictim(){
   $('#headline').text('OK, done! Let\'s see who is next? Just click "GO!" button for next roll.');
   $("#hide").hide();
   $("#varnote").show();
-  $("#go").show ();
   // $('<div id="space" style="height:8em;"></div>').insertAfter("#go");
   $('#headline').slideDown();
+
+  $("#go").show().slideUp( 300 ).delay( 800 ).fadeIn( 400 );
+  $("#space_go").show();
 }
 
 </script>
