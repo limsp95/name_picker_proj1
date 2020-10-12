@@ -276,14 +276,14 @@ span{
       <li><button class="button dropdown">
       Customise
   <div class="dropdown-content">
-      <span style="padding:0.2em;">Upload logo / theme picture</span><br/> 
+      <span style="padding:0.2em;">Change background color</span><br/> 
       <div class="" style="padding-top:1em;">
-        <div class="color floral_white" data-value="#fffaf0"></div>
+        <!-- <div class="color floral_white" data-value="#fffaf0"></div>
         <div class="color gray" data-value="#eaeaea"></div>
         <div class="color pink" data-value="#ffb6c1"></div>
       
         
-          <div class="color picker" onclick="pickColor();"><img src='img/color-picker-icon.png' /></div><div id ="gp" style="padding-top:1em;"></div>
+          <div class="color picker" onclick="pickColor();"><img src='img/color-picker-icon.png' /></div> --><div id ="gp" style="padding-top:1em;"></div>
           </div>
         <div class="" style="padding-top:1em;">
           <span style="padding:0.2em;">Upload logo / theme picture</span>
@@ -294,21 +294,31 @@ span{
         <!-- <i onclick="myFunction(this)" class="fas fa-eye"></i><br/> -->
         </div>
         <div class="" style="padding-top:1em;">
-        <span style="padding:0.2em;">Click to toggle headline color</span><br/>
-        <div class="color" style="margin-top:1em;" id="toggle_font_color"></div></div>
+        <span style="padding:0.2em;">Change headline and button color</span><br/>
+        <!-- <div class="color" style="margin-top:1em;" id="toggle_font_color"></div> -->
+        <div class="color picker" style="margin-top:1em;" onclick="pickColor();"><img src='img/color-picker-icon.png' /></div> 
+      </div>
       
     </button><input id="colorpicker" type="color"/>
         
-        <script>$("#toggle_font_color").click(function(){
+       <!--  <script>$("#toggle_font_color").click(function(){
   $('#headline').each(function(){
     var classes = ['class1','class2','class3','class4','class5','class6','class7','class8','class9','class10','class11','class12'];
     this.className = classes[($.inArray(this.className, classes)+1)%classes.length];
     $('#toggle_font_color').css("background", $(this).css("color"));
+    $('#go').css({"border-color":$(this).css("color"), "color":$(this).css("color")});
+    $('#save').css({"border-color":$(this).css("color")});
+    $("#go").hover(function() {
+  $(this).css("background-color",$(this).css("color")
+});
+  $("#save").hover(function() {
+  $(this).css("background-color",$(this).css("color")
+});
     // $('#name').className = classes[($.inArray(this.className, classes)+1)%classes.length];
     // $("[id*='result']").css("color", $(this).css("color"));
   });
 
-});</script>
+});</script> -->
         
       </li>
   </div>
@@ -329,17 +339,17 @@ span{
   </script>
     <script>
 
-      $(function() {
-  //bg color selector
-  $(".color").click(function(){
-    var color = $(this).attr("data-value");
-    $("body").css("background", color);
-//       $(".button").hover(function(){
-//   $(this).css("color", color);
-// }, function(){
-//   $(this).css("color", "#66FCF1");
- });
-   }); 
+//       $(function() {
+//   //bg color selector
+//   $(".color").click(function(){
+//     var color = $(this).attr("data-value");
+//     $("body").css("background", color);
+// //       $(".button").hover(function(){
+// //   $(this).css("color", color);
+// // }, function(){
+// //   $(this).css("color", "#66FCF1");
+//  });
+//    }); 
   
   
   //add color picker if supported
@@ -349,7 +359,11 @@ span{
     c.addEventListener('change', function(e) {
       //d.innerHTML = c.value;
       var color = c.value;
-      $("body").css("background", color);
+      // $("body").css("background", color);
+      $('#headline').css("color", color);
+      $('#toggle_font_color').css("background", color);
+      $('#go').css({"border-color":color, "color":color});
+      $('#save').css({"border-color":color, "color":color});
 //       $(".button").hover(function(){
 //   $(this).css("color", color);
 // }, function(){
@@ -359,6 +373,9 @@ span{
 //   }
 });
 };
+
+
+
 function pickColor() {
   $("#colorpicker").click();
 }
@@ -908,6 +925,18 @@ makeResizableDiv('.resizable')
 //   element3.classList.remove("resizer");
 // }
 
+//hover effect
+$("#go").hover(function() {
+  $(this).css({"background-color":$('#headline').css("color"), "color":"black"})
+}, function(){
+  $(this).css({"color":$('#headline').css("color"), "background-color":"transparent"});
+});
+
+$("#save").hover(function() {
+  $(this).css({"background-color":$('#headline').css("color"), "color":"black"})
+}, function(){
+  $(this).css({"color":$('#headline').css("color"), "background-color":"transparent"});
+});
 </script>
 
 </body>
