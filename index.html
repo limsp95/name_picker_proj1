@@ -252,6 +252,12 @@ span{
   margin:auto;
 }
 
+.fa-chevron-circle-down{
+  display:none;
+  right: 0;
+  position: absolute;
+}
+
 </style>
 
 </head>
@@ -399,10 +405,10 @@ function readURL(){
         <label for="getval">
             <i class="fas fa-image" id="upload_image"></i>
         </label>
-        <input type='file' id='getval' />
+        <input type='file' id='getval' /> -->
 
-        ///////////// <i onclick="myFunction(this)" class="fas fa-eye"></i><br/>
-      </div> -->
+        <i onclick="myFunction(this)" class="fas fa-chevron-circle-down"></i><br/>
+      <!-- </div> --> 
 			
 			<div id="varnote"><div id='logo'></div></div>
       <div><button class="roll button" id="go" onclick="go();">GO!</button></li></div>
@@ -611,6 +617,7 @@ function namelist(){
 function go(){
   $("#upload_image").hide();
   $("#go").hide();
+  $(".fa-chevron-circle-down").show();
   document.documentElement.requestFullscreen();
   $("#varnote").hide();
   $("#hide").hide();
@@ -757,21 +764,18 @@ if (!document.exitFullscreen) {
   document.exitFullscreen = document.mozExitFullscreen || document.webkitExitFullscreen || document.msExitFullscreen;
 }
 
-// function myFunction(x) {
+function myFunction(x) {
 
-//   if (document.fullscreenElement) {
-//     $("#hide").show();
-//     document.exitFullscreen();
-//     x.classList.toggle("fa-eye-slash");
+  if (document.fullscreenElement) {
+    $("#hide").show();
+    document.exitFullscreen();
+    // x.classList.toggle("fa-eye-slash");
+    $(".fa-chevron-circle-down").hide();
     
-//   } else {
-    
-//     $("#hide").hide();
-//     x.classList.toggle("fa-eye-slash");
-//     document.documentElement.requestFullscreen();
-//   }
+  } else {
+  }
 
-// }
+}
 
 /**
  * document.fullscreenElement polyfill
