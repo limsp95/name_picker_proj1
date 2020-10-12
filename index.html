@@ -299,7 +299,6 @@ span{
     $('#toggle_font_color').css("background", $(this).css("color"));
     // $('#name').className = classes[($.inArray(this.className, classes)+1)%classes.length];
     // $("[id*='result']").css("color", $(this).css("color"));
-    $('#name').css("background", $('#headline').css("color"));
   });
 
 });</script>
@@ -407,6 +406,7 @@ function readURL(){
 			
 			<div id="varnote"><div id='logo'></div></div>
       <div><button class="roll button" id="go" onclick="go();">GO!</button></li></div>
+      <div id="space" style="height:8em;"></div>
 <!-- 			<div class='resizable'>
   <div class='resizers'>
     <div class='resizer top-left hide_resizer'></div>
@@ -419,7 +419,8 @@ function readURL(){
 
 
       <div id="popdown">
-      <div id="names" class="inbox"><textarea name="namesbox" id="namesbox"></textarea><button class="roll button" id="save" onclick="save();">Save</button></div>\
+      <div id="names" class="inbox"><textarea name="namesbox" id="namesbox"></textarea><button class="roll button" id="save" onclick="save();">Save</button></div>
+      <div id="space" style="height:8em;"></div>
       </div>
       
       <div id="values"></div>
@@ -602,7 +603,7 @@ function namelist(){
         $("#values").hide();
         $("#names").show();
         $('#save').css({"display": "grid"});
-        $('<div style="height:8em;"></div>').insertAfter("#save");
+        // $('<div style="height:8em;"></div>').insertAfter("#save");
         // $('body').css({"overflow-y": "visible"});
 }
 
@@ -651,6 +652,7 @@ function go(){
       name = names[i];
       //console.log(name);
       $('#values').append('<div id=result'+count+' class=name>'+name+'</div>');
+      $("[id*='result']:not(#result1)").css("color", $('#headline').css("color"));
     }
     count = count+1;
   }
@@ -668,6 +670,7 @@ function go(){
     }
     count = count+1;
   }
+
   text = $('#result1').text()
   $('#values').animate({top: '+176'},5000);
 
@@ -713,7 +716,7 @@ function removevictim(){
   $("#hide").hide();
   $("#varnote").show();
   $("#go").show ();
-  $('<div style="height:8em;"></div>').insertAfter("#go");
+  // $('<div id="space" style="height:8em;"></div>').insertAfter("#go");
   $('#headline').slideDown();
 }
 
