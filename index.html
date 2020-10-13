@@ -194,10 +194,13 @@ span{
 
 .button{
   background-color:transparent;
-  border: 3px solid #66FCF1;
+  /*border: 3px solid #66FCF1;*/
+  border:none;
+  box-shadow:none;
   color:#66FCF1;
   text-transform: uppercase;
   font-weight: 200;
+  letter-spacing: .1rem;
 }
 
 .button:hover{
@@ -395,8 +398,8 @@ span{
   /*margin-left: -150px;
   margin-top: -150px;*/
   z-index: 9;
-  width: 80%;
-  height: 80%;
+  width: 100%;
+  height: 100%;
     /*border: solid 2px rgba(222,222,222,.9);*/
   box-sizing: content-box;
   pointer-events: none;
@@ -475,8 +478,8 @@ span{
         </label>
         <!-- <input style="margin-top:1em;"type='file' id='getval' /> -->
         <input type="file" class="btn js-loadfile" value="Upload" />
-        <div class="button js-reset">Reset</div>
-        <div class="btn js-crop">Crop</div>
+        <div class="btn js-reset">Reset</div>
+        <div class="btn js-crop">Lock</div>
         <!-- <i onclick="myFunction(this)" class="fas fa-eye"></i><br/> -->
         </div>
         <div class="" style="padding-top:1em;">
@@ -1364,6 +1367,7 @@ var resizeableImage = function(image_target) {
   };
 
   crop = function(){
+    $(".crop-wrapper").css({"background-color": "transparent"})
     //Find the part of the image that is inside the crop box
     var crop_canvas,
         left = $('.overlay').offset().left- $container.offset().left,
@@ -1380,6 +1384,7 @@ var resizeableImage = function(image_target) {
   var dataURL=crop_canvas.toDataURL("image/png");
   image_target.src=dataURL;
   orig_src.src=image_target.src;
+
   
   
   $(image_target).bind("load",function() {
@@ -1394,6 +1399,7 @@ var resizeableImage = function(image_target) {
     //window.open(crop_canvas.toDataURL("image/png"));
     $(".resize-handle").hide();
   }
+  
 
   init();
 };
