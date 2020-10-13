@@ -610,7 +610,7 @@ function readURL(){
         </label>
         <input type='file' id='getval' /> -->
 
-        <i onclick="myFunction1(this)" class="fas fa-chevron-circle-down"></i><br/>
+        <i onclick="myFunction(this)" class="fas fa-chevron-circle-down"></i><br/>
       <!-- </div> --> 
 			
 			<div id="varnote"><div class="crop-wrapper">
@@ -840,6 +840,7 @@ function namelist(){
 function go(){
   $("#upload_image").hide();
   $("#go").hide();
+  $("#space_go").hide();
   $(".fa-chevron-circle-down").show();
   document.documentElement.requestFullscreen();
   $("#varnote").hide();
@@ -989,7 +990,7 @@ if (!document.exitFullscreen) {
   document.exitFullscreen = document.mozExitFullscreen || document.webkitExitFullscreen || document.msExitFullscreen;
 }
 
-function myFunction1(x) {
+function myFunction(x) {
 
   if (document.fullscreenElement) {
     $("#hide").show();
