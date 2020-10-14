@@ -19,10 +19,7 @@ $("#save").hover(function(){
   $(this).css({"border-color":$('#headline').css("color"), "color":$('#headline').css("color"), "background-color": "transparent"});
  });
 }
-<<<<<<< obf
 // rgb to hex
-=======
->>>>>>> bw_ofs
 function rgb2hex(a) {
     var b = [
         '0',

@@ -1,363 +1,363 @@
-function makeResizableDiv(a) {
-<<<<<<< obf
-    const b = document['querySelector'](a), c = document['querySelectorAll'](a + '\x20.resizer'), d = 0x14;
-    let e = 0x0, f = 0x0, g = 0x0, h = 0x0, j = 0x0, k = 0x0;
-    for (let l = 0x0; l < c['length']; l++) {
-        const m = c[l];
-        m['addEventListener']('mousedown', function (p) {
-            p['preventDefault'](), e = parseFloat(getComputedStyle(b, null)['getPropertyValue']('width')['replace']('px', '')), f = parseFloat(getComputedStyle(b, null)['getPropertyValue']('height')['replace']('px', '')), g = b['getBoundingClientRect']()['left'], h = b['getBoundingClientRect']()['top'], j = p['pageX'], k = p['pageY'], window['addEventListener']('mousemove', n), window['addEventListener']('mouseup', o);
-        });
-        function n(p) {
-            if (m['classList']['contains']('bottom-right')) {
-                const q = e + (p['pageX'] - j), r = f + (p['pageY'] - k);
-                q > d && (b['style']['width'] = q + 'px'), r > d && (b['style']['height'] = r + 'px');
-            } else {
-                if (m['classList']['contains']('bottom-left')) {
-                    const s = f + (p['pageY'] - k), t = e - (p['pageX'] - j);
-                    s > d && (b['style']['height'] = s + 'px'), t > d && (b['style']['width'] = t + 'px', b['style']['left'] = g + (p['pageX'] - j) + 'px');
-                } else {
-                    if (m['classList']['contains']('top-right')) {
-                        const u = e + (p['pageX'] - j), v = f - (p['pageY'] - k);
-                        u > d && (b['style']['width'] = u + 'px'), v > d && (b['style']['height'] = v + 'px', b['style']['top'] = h + (p['pageY'] - k) + 'px');
-                    } else {
-                        const w = e - (p['pageX'] - j), x = f - (p['pageY'] - k);
-                        w > d && (b['style']['width'] = w + 'px', b['style']['left'] = g + (p['pageX'] - j) + 'px'), x > d && (b['style']['height'] = x + 'px', b['style']['top'] = h + (p['pageY'] - k) + 'px');
-                    }
-=======
-    const b = document['querySelector'](a);
-    const c = document['querySelectorAll'](a + '\x20.resizer');
-    const d = 0x14;
-    let e = 0x0;
-    let f = 0x0;
-    let g = 0x0;
-    let h = 0x0;
-    let j = 0x0;
-    let k = 0x0;
-    for (let l = 0x0; l < c['length']; l++) {
-        const m = c[l];
-        m['addEventListener']('mousedown', function (p) {
-            p['preventDefault']();
-            e = parseFloat(getComputedStyle(b, null)['getPropertyValue']('width')['replace']('px', ''));
-            f = parseFloat(getComputedStyle(b, null)['getPropertyValue']('height')['replace']('px', ''));
-            g = b['getBoundingClientRect']()['left'];
-            h = b['getBoundingClientRect']()['top'];
-            j = p['pageX'];
-            k = p['pageY'];
-            window['addEventListener']('mousemove', n);
-            window['addEventListener']('mouseup', o);
-        });
-        function n(p) {
-            if (m['classList']['contains']('bottom-right')) {
-                const q = e + (p['pageX'] - j);
-                const r = f + (p['pageY'] - k);
-                if (q > d) {
-                    b['style']['width'] = q + 'px';
-                }
-                if (r > d) {
-                    b['style']['height'] = r + 'px';
-                }
-            } else if (m['classList']['contains']('bottom-left')) {
-                const s = f + (p['pageY'] - k);
-                const t = e - (p['pageX'] - j);
-                if (s > d) {
-                    b['style']['height'] = s + 'px';
-                }
-                if (t > d) {
-                    b['style']['width'] = t + 'px';
-                    b['style']['left'] = g + (p['pageX'] - j) + 'px';
-                }
-            } else if (m['classList']['contains']('top-right')) {
-                const u = e + (p['pageX'] - j);
-                const v = f - (p['pageY'] - k);
-                if (u > d) {
-                    b['style']['width'] = u + 'px';
-                }
-                if (v > d) {
-                    b['style']['height'] = v + 'px';
-                    b['style']['top'] = h + (p['pageY'] - k) + 'px';
-                }
-            } else {
-                const w = e - (p['pageX'] - j);
-                const x = f - (p['pageY'] - k);
-                if (w > d) {
-                    b['style']['width'] = w + 'px';
-                    b['style']['left'] = g + (p['pageX'] - j) + 'px';
-                }
-                if (x > d) {
-                    b['style']['height'] = x + 'px';
-                    b['style']['top'] = h + (p['pageY'] - k) + 'px';
->>>>>>> bw_ofs
-                }
-            }
+/*Make resizable div by Hung Nguyen*/
+function makeResizableDiv(div) {
+  const element = document.querySelector(div);
+  const resizers = document.querySelectorAll(div + ' .resizer')
+  const minimum_size = 20;
+  let original_width = 0;
+  let original_height = 0;
+  let original_x = 0;
+  let original_y = 0;
+  let original_mouse_x = 0;
+  let original_mouse_y = 0;
+  for (let i = 0;i < resizers.length; i++) {
+    const currentResizer = resizers[i];
+    currentResizer.addEventListener('mousedown', function(e) {
+      e.preventDefault()
+      original_width = parseFloat(getComputedStyle(element, null).getPropertyValue('width').replace('px', ''));
+      original_height = parseFloat(getComputedStyle(element, null).getPropertyValue('height').replace('px', ''));
+      original_x = element.getBoundingClientRect().left;
+      original_y = element.getBoundingClientRect().top;
+      original_mouse_x = e.pageX;
+      original_mouse_y = e.pageY;
+      window.addEventListener('mousemove', resize)
+      window.addEventListener('mouseup', stopResize)
+    })
+    
+    function resize(e) {
+      if (currentResizer.classList.contains('bottom-right')) {
+        const width = original_width + (e.pageX - original_mouse_x);
+        const height = original_height + (e.pageY - original_mouse_y)
+        if (width > minimum_size) {
+          element.style.width = width + 'px'
         }
-        function o() {
-            window['removeEventListener']('mousemove', n);
+        if (height > minimum_size) {
+          element.style.height = height + 'px'
         }
+      }
+      else if (currentResizer.classList.contains('bottom-left')) {
+        const height = original_height + (e.pageY - original_mouse_y)
+        const width = original_width - (e.pageX - original_mouse_x)
+        if (height > minimum_size) {
+          element.style.height = height + 'px'
+        }
+        if (width > minimum_size) {
+          element.style.width = width + 'px'
+          element.style.left = original_x + (e.pageX - original_mouse_x) + 'px'
+        }
+      }
+      else if (currentResizer.classList.contains('top-right')) {
+        const width = original_width + (e.pageX - original_mouse_x)
+        const height = original_height - (e.pageY - original_mouse_y)
+        if (width > minimum_size) {
+          element.style.width = width + 'px'
+        }
+        if (height > minimum_size) {
+          element.style.height = height + 'px'
+          element.style.top = original_y + (e.pageY - original_mouse_y) + 'px'
+        }
+      }
+      else {
+        const width = original_width - (e.pageX - original_mouse_x)
+        const height = original_height - (e.pageY - original_mouse_y)
+        if (width > minimum_size) {
+          element.style.width = width + 'px'
+          element.style.left = original_x + (e.pageX - original_mouse_x) + 'px'
+        }
+        if (height > minimum_size) {
+          element.style.height = height + 'px'
+          element.style.top = original_y + (e.pageY - original_mouse_y) + 'px'
+        }
+      }
     }
+    
+    function stopResize() {
+      window.removeEventListener('mousemove', resize)
+    }
+  }
 }
-makeResizableDiv('.resizable');
-var resizeableImage = function (a) {
-    var b, c = new Image(), a = $(a)['get'](0x0), d = {}, e = ![], f = 0x3c, g = 0x3c, h = 0x708, i = 0x76c, j = 0x1f4, k = document['createElement']('canvas');
-<<<<<<< obf
-    imageData = null, init = function () {
-        $('.js-loadfile')['change'](function (l) {
-            var m = l['target']['files'], n = new FileReader();
-            n['onload'] = function (o) {
-                imageData = n['result'], loadData();
-            }, n['readAsDataURL'](m[0x0]);
-        }), $('.js-reset')['click'](function () {
-            if (imageData)
-                loadData();
-            $('.resize-handle')['show']();
-        }), c['src'] = a['src'], $(a)['height'](j)['wrap']('<div\x20class=\x22resize-container\x22></div>')['before']('<span\x20class=\x22resize-handle\x20resize-handle-nw\x22></span>')['before']('<span\x20class=\x22resize-handle\x20resize-handle-ne\x22></span>')['after']('<span\x20class=\x22resize-handle\x20resize-handle-se\x22></span>')['after']('<span\x20class=\x22resize-handle\x20resize-handle-sw\x22></span>'), b = $('.resize-container'), b['prepend']('<div\x20class=\x22resize-container-ontop\x22></div>'), b['on']('mousedown\x20touchstart', '.resize-handle', startResize), b['on']('mousedown\x20touchstart', '.resize-container-ontop', startMoving), $('.js-crop')['on']('click', crop);
-    }, loadData = function () {
-        a['src'] = imageData, c['src'] = a['src'], b['css']('display', 'inline-block'), $(a)['css']({
-            'width': 'auto',
-            'height': j
-        }), $(c)['bind']('load', function () {
-            resizeImageCanvas($(a)['width'](), $(a)['height']());
-        });
-    }, startResize = function (l) {
-        l['preventDefault'](), l['stopPropagation'](), saveEventState(l), $(document)['on']('mousemove\x20touchmove', resizing), $(document)['on']('mouseup\x20touchend', endResize);
-    }, endResize = function (l) {
-        resizeImageCanvas($(a)['width'](), $(a)['height']()), l['preventDefault'](), $(document)['off']('mouseup\x20touchend', endResize), $(document)['off']('mousemove\x20touchmove', resizing);
-    }, saveEventState = function (l) {
-        d['container_width'] = b['width'](), d['container_height'] = b['height'](), d['container_left'] = b['offset']()['left'], d['container_top'] = b['offset']()['top'], d['mouse_x'] = (l['clientX'] || l['pageX'] || l['originalEvent']['touches'][0x0]['clientX']) + $(window)['scrollLeft'](), d['mouse_y'] = (l['clientY'] || l['pageY'] || l['originalEvent']['touches'][0x0]['clientY']) + $(window)['scrollTop'](), typeof l['originalEvent']['touches'] !== 'undefined' && (d['touches'] = [], $['each'](l['originalEvent']['touches'], function (m, n) {
-            d['touches'][m] = {}, d['touches'][m]['clientX'] = 0x0 + n['clientX'], d['touches'][m]['clientY'] = 0x0 + n['clientY'];
-        })), d['evnt'] = l;
-    }, resizing = function (l) {
-        var m = {}, n, o, p, q, r = b['offset']();
-        m['x'] = (l['clientX'] || l['pageX'] || l['originalEvent']['touches'][0x0]['clientX']) + $(window)['scrollLeft'](), m['y'] = (l['clientY'] || l['pageY'] || l['originalEvent']['touches'][0x0]['clientY']) + $(window)['scrollTop']();
-        if ($(d['evnt']['target'])['hasClass']('resize-handle-se'))
-            n = m['x'] - d['container_left'], o = m['y'] - d['container_top'], p = d['container_left'], q = d['container_top'];
-        else {
-            if ($(d['evnt']['target'])['hasClass']('resize-handle-sw'))
-                n = d['container_width'] - (m['x'] - d['container_left']), o = m['y'] - d['container_top'], p = m['x'], q = d['container_top'];
-            else {
-                if ($(d['evnt']['target'])['hasClass']('resize-handle-nw'))
-                    n = d['container_width'] - (m['x'] - d['container_left']), o = d['container_height'] - (m['y'] - d['container_top']), p = m['x'], q = m['y'], (e || l['shiftKey']) && (q = m['y'] - (n / c['width'] * c['height'] - o));
-                else
-                    $(d['evnt']['target'])['hasClass']('resize-handle-ne') && (n = m['x'] - d['container_left'], o = d['container_height'] - (m['y'] - d['container_top']), p = d['container_left'], q = m['y'], (e || l['shiftKey']) && (q = m['y'] - (n / c['width'] * c['height'] - o)));
-            }
-        }
-        (e || l['shiftKey']) && (o = n / c['width'] * c['height']), n > f && o > g && n < h && o < i && (resizeImage(n, o), b['offset']({
-            'left': p,
-            'top': q
-        }));
-    }, resizeImage = function (l, m) {
-        $(a)['width'](l)['height'](m);
-    }, resizeImageCanvas = function (l, m) {
-        k['width'] = l, k['height'] = m, k['getContext']('2d')['drawImage'](c, 0x0, 0x0, l, m), $(a)['attr']('src', k['toDataURL']('image/png'));
-    }, startMoving = function (l) {
-        l['preventDefault'](), l['stopPropagation'](), saveEventState(l), $(document)['on']('mousemove\x20touchmove', moving), $(document)['on']('mouseup\x20touchend', endMoving);
-    }, endMoving = function (l) {
-        l['preventDefault'](), $(document)['off']('mouseup\x20touchend', endMoving), $(document)['off']('mousemove\x20touchmove', moving);
-    }, moving = function (l) {
-        var m = {}, n;
-        l['preventDefault'](), l['stopPropagation'](), n = l['originalEvent']['touches'], m['x'] = (l['clientX'] || l['pageX'] || n[0x0]['clientX']) + $(window)['scrollLeft'](), m['y'] = (l['clientY'] || l['pageY'] || n[0x0]['clientY']) + $(window)['scrollTop'](), b['offset']({
-=======
-    imageData = null;
-    init = function () {
-        $('.js-loadfile')['change'](function (l) {
-            var m = l['target']['files'];
-            var n = new FileReader();
-            n['onload'] = function (o) {
-                imageData = n['result'];
-                loadData();
-            };
-            n['readAsDataURL'](m[0x0]);
-        });
-        $('.js-reset')['click'](function () {
-            if (imageData)
-                loadData();
-            $('.resize-handle')['show']();
-        });
-        c['src'] = a['src'];
-        $(a)['height'](j)['wrap']('<div\x20class=\x22resize-container\x22></div>')['before']('<span\x20class=\x22resize-handle\x20resize-handle-nw\x22></span>')['before']('<span\x20class=\x22resize-handle\x20resize-handle-ne\x22></span>')['after']('<span\x20class=\x22resize-handle\x20resize-handle-se\x22></span>')['after']('<span\x20class=\x22resize-handle\x20resize-handle-sw\x22></span>');
-        b = $('.resize-container');
-        b['prepend']('<div\x20class=\x22resize-container-ontop\x22></div>');
-        b['on']('mousedown\x20touchstart', '.resize-handle', startResize);
-        b['on']('mousedown\x20touchstart', '.resize-container-ontop', startMoving);
-        $('.js-crop')['on']('click', crop);
-    };
-    loadData = function () {
-        a['src'] = imageData;
-        c['src'] = a['src'];
-        b['css']('display', 'inline-block');
-        $(a)['css']({
-            'width': 'auto',
-            'height': j
-        });
-        $(c)['bind']('load', function () {
-            resizeImageCanvas($(a)['width'](), $(a)['height']());
-        });
-    };
-    startResize = function (l) {
-        l['preventDefault']();
-        l['stopPropagation']();
-        saveEventState(l);
-        $(document)['on']('mousemove\x20touchmove', resizing);
-        $(document)['on']('mouseup\x20touchend', endResize);
-    };
-    endResize = function (l) {
-        resizeImageCanvas($(a)['width'](), $(a)['height']());
-        l['preventDefault']();
-        $(document)['off']('mouseup\x20touchend', endResize);
-        $(document)['off']('mousemove\x20touchmove', resizing);
-    };
-    saveEventState = function (l) {
-        d['container_width'] = b['width']();
-        d['container_height'] = b['height']();
-        d['container_left'] = b['offset']()['left'];
-        d['container_top'] = b['offset']()['top'];
-        d['mouse_x'] = (l['clientX'] || l['pageX'] || l['originalEvent']['touches'][0x0]['clientX']) + $(window)['scrollLeft']();
-        d['mouse_y'] = (l['clientY'] || l['pageY'] || l['originalEvent']['touches'][0x0]['clientY']) + $(window)['scrollTop']();
-        if (typeof l['originalEvent']['touches'] !== 'undefined') {
-            d['touches'] = [];
-            $['each'](l['originalEvent']['touches'], function (m, n) {
-                d['touches'][m] = {};
-                d['touches'][m]['clientX'] = 0x0 + n['clientX'];
-                d['touches'][m]['clientY'] = 0x0 + n['clientY'];
-            });
-        }
-        d['evnt'] = l;
-    };
-    resizing = function (l) {
-        var m = {}, n, o, p, q, r = b['offset']();
-        m['x'] = (l['clientX'] || l['pageX'] || l['originalEvent']['touches'][0x0]['clientX']) + $(window)['scrollLeft']();
-        m['y'] = (l['clientY'] || l['pageY'] || l['originalEvent']['touches'][0x0]['clientY']) + $(window)['scrollTop']();
-        if ($(d['evnt']['target'])['hasClass']('resize-handle-se')) {
-            n = m['x'] - d['container_left'];
-            o = m['y'] - d['container_top'];
-            p = d['container_left'];
-            q = d['container_top'];
-        } else if ($(d['evnt']['target'])['hasClass']('resize-handle-sw')) {
-            n = d['container_width'] - (m['x'] - d['container_left']);
-            o = m['y'] - d['container_top'];
-            p = m['x'];
-            q = d['container_top'];
-        } else if ($(d['evnt']['target'])['hasClass']('resize-handle-nw')) {
-            n = d['container_width'] - (m['x'] - d['container_left']);
-            o = d['container_height'] - (m['y'] - d['container_top']);
-            p = m['x'];
-            q = m['y'];
-            if (e || l['shiftKey']) {
-                q = m['y'] - (n / c['width'] * c['height'] - o);
-            }
-        } else if ($(d['evnt']['target'])['hasClass']('resize-handle-ne')) {
-            n = m['x'] - d['container_left'];
-            o = d['container_height'] - (m['y'] - d['container_top']);
-            p = d['container_left'];
-            q = m['y'];
-            if (e || l['shiftKey']) {
-                q = m['y'] - (n / c['width'] * c['height'] - o);
-            }
-        }
-        if (e || l['shiftKey']) {
-            o = n / c['width'] * c['height'];
-        }
-        if (n > f && o > g && n < h && o < i) {
-            resizeImage(n, o);
-            b['offset']({
-                'left': p,
-                'top': q
-            });
-        }
-    };
-    resizeImage = function (l, m) {
-        $(a)['width'](l)['height'](m);
-    };
-    resizeImageCanvas = function (l, m) {
-        k['width'] = l;
-        k['height'] = m;
-        k['getContext']('2d')['drawImage'](c, 0x0, 0x0, l, m);
-        $(a)['attr']('src', k['toDataURL']('image/png'));
-    };
-    startMoving = function (l) {
-        l['preventDefault']();
-        l['stopPropagation']();
-        saveEventState(l);
-        $(document)['on']('mousemove\x20touchmove', moving);
-        $(document)['on']('mouseup\x20touchend', endMoving);
-    };
-    endMoving = function (l) {
-        l['preventDefault']();
-        $(document)['off']('mouseup\x20touchend', endMoving);
-        $(document)['off']('mousemove\x20touchmove', moving);
-    };
-    moving = function (l) {
-        var m = {}, n;
-        l['preventDefault']();
-        l['stopPropagation']();
-        n = l['originalEvent']['touches'];
-        m['x'] = (l['clientX'] || l['pageX'] || n[0x0]['clientX']) + $(window)['scrollLeft']();
-        m['y'] = (l['clientY'] || l['pageY'] || n[0x0]['clientY']) + $(window)['scrollTop']();
-        b['offset']({
->>>>>>> bw_ofs
-            'left': m['x'] - (d['mouse_x'] - d['container_left']),
-            'top': m['y'] - (d['mouse_y'] - d['container_top'])
-        });
-        if (d['touches'] && d['touches']['length'] > 0x1 && n['length'] > 0x1) {
-<<<<<<< obf
-            var o = d['container_width'], p = d['container_height'], q = d['touches'][0x0]['clientX'] - d['touches'][0x1]['clientX'];
-=======
-            var o = d['container_width'], p = d['container_height'];
-            var q = d['touches'][0x0]['clientX'] - d['touches'][0x1]['clientX'];
->>>>>>> bw_ofs
-            q = q * q;
-            var r = d['touches'][0x0]['clientY'] - d['touches'][0x1]['clientY'];
-            r = r * r;
-            var s = Math['sqrt'](q + r);
-<<<<<<< obf
-            q = l['originalEvent']['touches'][0x0]['clientX'] - n[0x1]['clientX'], q = q * q, r = l['originalEvent']['touches'][0x0]['clientY'] - n[0x1]['clientY'], r = r * r;
-            var t = Math['sqrt'](q + r), u = t / s;
-            o = o * u, p = p * u, resizeImage(o, p);
-        }
-    }, crop = function () {
-        $('.crop-wrapper')['css']({ 'background-color': 'transparent' });
-        var l, m = $('.overlay')['offset']()['left'] - b['offset']()['left'], n = $('.overlay')['offset']()['top'] - b['offset']()['top'], o = $('.overlay')['width'](), p = $('.overlay')['height']();
-        l = document['createElement']('canvas'), l['width'] = o, l['height'] = p, l['getContext']('2d')['drawImage'](a, m, n, o, p, 0x0, 0x0, o, p);
-        var q = l['toDataURL']('image/png');
-        a['src'] = q, c['src'] = a['src'], $(a)['bind']('load', function () {
-=======
-            q = l['originalEvent']['touches'][0x0]['clientX'] - n[0x1]['clientX'];
-            q = q * q;
-            r = l['originalEvent']['touches'][0x0]['clientY'] - n[0x1]['clientY'];
-            r = r * r;
-            var t = Math['sqrt'](q + r);
-            var u = t / s;
-            o = o * u;
-            p = p * u;
-            resizeImage(o, p);
-        }
-    };
-    crop = function () {
-        $('.crop-wrapper')['css']({ 'background-color': 'transparent' });
-        var l, m = $('.overlay')['offset']()['left'] - b['offset']()['left'], n = $('.overlay')['offset']()['top'] - b['offset']()['top'], o = $('.overlay')['width'](), p = $('.overlay')['height']();
-        l = document['createElement']('canvas');
-        l['width'] = o;
-        l['height'] = p;
-        l['getContext']('2d')['drawImage'](a, m, n, o, p, 0x0, 0x0, o, p);
-        var q = l['toDataURL']('image/png');
-        a['src'] = q;
-        c['src'] = a['src'];
-        $(a)['bind']('load', function () {
->>>>>>> bw_ofs
-            $(this)['css']({
-                'width': o,
-                'height': p
-            })['unbind']('load')['parent']()['css']({
-                'top': $('.overlay')['offset']()['top'] - $('.crop-wrapper')['offset']()['top'],
-                'left': $('.overlay')['offset']()['left'] - $('.crop-wrapper')['offset']()['left']
-            });
-<<<<<<< obf
-        }), $('.resize-handle')['hide']();
-    }, init();
-=======
-        });
-        $('.resize-handle')['hide']();
-    };
-    init();
->>>>>>> bw_ofs
+
+makeResizableDiv('.resizable')
+
+// function myFunction() {
+//   var element = document.getElementsByClassName("hide_resizer")[0];
+//   element.classList.remove("resizer");
+//   var element1 = document.getElementsByClassName("hide_resizer")[1];
+//   element1.classList.remove("resizer");
+//   var element2 =
+//   document.getElementsByClassName("hide_resizer")[2];
+//   element2.classList.remove("resizer");
+//   var element3 = document.getElementsByClassName("hide_resizer")[3];
+//   element3.classList.remove("resizer");
+// }
+
+var resizeableImage = function(image_target) {
+  // Some variable and settings
+  var $container,
+  orig_src = new Image(),
+  image_target = $(image_target).get(0),
+  event_state = {},
+  constrain = false,
+  min_width = 60, // Change as required
+  min_height = 60,
+  max_width = 1800, // Change as required
+  max_height = 1900,
+  init_height=500,
+  resize_canvas = document.createElement('canvas');
+  imageData=null;
+
+  init = function(){
+  
+  //load a file with html5 file api
+  $('.js-loadfile').change(function(evt) {
+    var files = evt.target.files; // FileList object
+    var reader = new FileReader();
+
+    reader.onload = function(e) {
+      imageData=reader.result;
+      loadData();
+    }
+    reader.readAsDataURL(files[0]);
+  });
+  
+  //add the reset eventhandler
+  $('.js-reset').click(function() {
+    if(imageData)
+      loadData();
+    $(".resize-handle").show();
+
+  });
+  
+
+    // When resizing, we will always use this copy of the original as the base
+    orig_src.src=image_target.src;
+
+    // Wrap the image with the container and add resize handles
+    $(image_target).height(init_height)
+  .wrap('<div class="resize-container"></div>')
+    .before('<span class="resize-handle resize-handle-nw"></span>')
+    .before('<span class="resize-handle resize-handle-ne"></span>')
+    .after('<span class="resize-handle resize-handle-se"></span>')
+    .after('<span class="resize-handle resize-handle-sw"></span>');
+
+    // Assign the container to a variable
+    $container =  $('.resize-container');
+    //$container.style.width= "100px";
+
+    
+  $container.prepend('<div class="resize-container-ontop"></div>');
+  
+    // Add events
+    $container.on('mousedown touchstart', '.resize-handle', startResize);
+    $container.on('mousedown touchstart', '.resize-container-ontop', startMoving);
+    $('.js-crop').on('click', crop);
+  };
+  
+  loadData = function() {
+      
+  //set the image target
+  image_target.src=imageData;
+  orig_src.src=image_target.src;
+  $container.css("display", "inline-block");
+  //set the image tot he init height
+  $(image_target).css({
+    width:'auto',
+    height:init_height
+  });
+  
+  
+  //resize the canvas
+  $(orig_src).bind('load',function() {
+    resizeImageCanvas($(image_target).width(),$(image_target).height());
+  });
+  
+  //show-image
+  
+  };
+  
+  startResize = function(e){
+    e.preventDefault();
+    e.stopPropagation();
+    saveEventState(e);
+    $(document).on('mousemove touchmove', resizing);
+    $(document).on('mouseup touchend', endResize);
+  };
+
+  endResize = function(e){
+  resizeImageCanvas($(image_target).width(), $(image_target).height())
+    e.preventDefault();
+    $(document).off('mouseup touchend', endResize);
+    $(document).off('mousemove touchmove', resizing);
+  };
+
+  saveEventState = function(e){
+    // Save the initial event details and container state
+    event_state.container_width = $container.width();
+    event_state.container_height = $container.height();
+    event_state.container_left = $container.offset().left; 
+    event_state.container_top = $container.offset().top;
+    event_state.mouse_x = (e.clientX || e.pageX || e.originalEvent.touches[0].clientX) + $(window).scrollLeft(); 
+    event_state.mouse_y = (e.clientY || e.pageY || e.originalEvent.touches[0].clientY) + $(window).scrollTop();
+  
+  // This is a fix for mobile safari
+  // For some reason it does not allow a direct copy of the touches property
+  if(typeof e.originalEvent.touches !== 'undefined'){
+    event_state.touches = [];
+    $.each(e.originalEvent.touches, function(i, ob){
+      event_state.touches[i] = {};
+      event_state.touches[i].clientX = 0+ob.clientX;
+      event_state.touches[i].clientY = 0+ob.clientY;
+    });
+  }
+    event_state.evnt = e;
+  };
+
+  resizing = function(e){
+    var mouse={},width,height,left,top,offset=$container.offset();
+    mouse.x = (e.clientX || e.pageX || e.originalEvent.touches[0].clientX) + $(window).scrollLeft(); 
+    mouse.y = (e.clientY || e.pageY || e.originalEvent.touches[0].clientY) + $(window).scrollTop();
+    
+    // Position image differently depending on the corner dragged and constraints
+    if( $(event_state.evnt.target).hasClass('resize-handle-se') ){
+      width = mouse.x - event_state.container_left;
+      height = mouse.y  - event_state.container_top;
+      left = event_state.container_left;
+      top = event_state.container_top;
+    } else if($(event_state.evnt.target).hasClass('resize-handle-sw') ){
+      width = event_state.container_width - (mouse.x - event_state.container_left);
+      height = mouse.y  - event_state.container_top;
+      left = mouse.x;
+      top = event_state.container_top;
+    } else if($(event_state.evnt.target).hasClass('resize-handle-nw') ){
+      width = event_state.container_width - (mouse.x - event_state.container_left);
+      height = event_state.container_height - (mouse.y - event_state.container_top);
+      left = mouse.x;
+      top = mouse.y;
+      if(constrain || e.shiftKey){
+        top = mouse.y - ((width / orig_src.width * orig_src.height) - height);
+      }
+    } else if($(event_state.evnt.target).hasClass('resize-handle-ne') ){
+      width = mouse.x - event_state.container_left;
+      height = event_state.container_height - (mouse.y - event_state.container_top);
+      left = event_state.container_left;
+      top = mouse.y;
+      if(constrain || e.shiftKey){
+        top = mouse.y - ((width / orig_src.width * orig_src.height) - height);
+      }
+    }
+  
+    // Optionally maintain aspect ratio
+    if(constrain || e.shiftKey){
+      height = width / orig_src.width * orig_src.height;
+    }
+
+    if(width > min_width && height > min_height && width < max_width && height < max_height){
+      // To improve performance you might limit how often resizeImage() is called
+      resizeImage(width, height);  
+      // Without this Firefox will not re-calculate the the image dimensions until drag end
+      $container.offset({'left': left, 'top': top});
+    }
+  }
+
+  resizeImage = function(width, height){
+  $(image_target).width(width).height(height);
+  };
+  
+  resizeImageCanvas = function(width, height){
+    resize_canvas.width = width;
+    resize_canvas.height = height;
+    resize_canvas.getContext('2d').drawImage(orig_src, 0, 0, width, height);   
+    $(image_target).attr('src', resize_canvas.toDataURL("image/png"));  
+  //$(image_target).width(width).height(height);
+  };
+
+  startMoving = function(e){
+    e.preventDefault();
+    e.stopPropagation();
+    saveEventState(e);
+    $(document).on('mousemove touchmove', moving);
+    $(document).on('mouseup touchend', endMoving);
+  };
+
+  endMoving = function(e){
+    e.preventDefault();
+    $(document).off('mouseup touchend', endMoving);
+    $(document).off('mousemove touchmove', moving);
+  };
+
+  moving = function(e){
+    var  mouse={}, touches;
+    e.preventDefault();
+    e.stopPropagation();
+    
+    touches = e.originalEvent.touches;
+    
+    mouse.x = (e.clientX || e.pageX || touches[0].clientX) + $(window).scrollLeft(); 
+    mouse.y = (e.clientY || e.pageY || touches[0].clientY) + $(window).scrollTop();
+    $container.offset({
+      'left': mouse.x - ( event_state.mouse_x - event_state.container_left ),
+      'top': mouse.y - ( event_state.mouse_y - event_state.container_top ) 
+    });
+    // Watch for pinch zoom gesture while moving
+    if(event_state.touches && event_state.touches.length > 1 && touches.length > 1){
+      var width = event_state.container_width, height = event_state.container_height;
+      var a = event_state.touches[0].clientX - event_state.touches[1].clientX;
+      a = a * a; 
+      var b = event_state.touches[0].clientY - event_state.touches[1].clientY;
+      b = b * b; 
+      var dist1 = Math.sqrt( a + b );
+      
+      a = e.originalEvent.touches[0].clientX - touches[1].clientX;
+      a = a * a; 
+      b = e.originalEvent.touches[0].clientY - touches[1].clientY;
+      b = b * b; 
+      var dist2 = Math.sqrt( a + b );
+
+      var ratio = dist2 /dist1;
+
+      width = width * ratio;
+      height = height * ratio;
+      // To improve performance you might limit how often resizeImage() is called
+      resizeImage(width, height);
+    }
+  };
+
+  crop = function(){
+    $(".crop-wrapper").css({"background-color": "transparent"})
+    //Find the part of the image that is inside the crop box
+    var crop_canvas,
+        left = $('.overlay').offset().left- $container.offset().left,
+        top =  $('.overlay').offset().top - $container.offset().top,
+        width = $('.overlay').width(),
+        height = $('.overlay').height();
+    
+    crop_canvas = document.createElement('canvas');
+  
+    crop_canvas.width = width;
+    crop_canvas.height = height;
+  
+    crop_canvas.getContext('2d').drawImage(image_target, left, top, width, height, 0, 0, width, height);
+  var dataURL=crop_canvas.toDataURL("image/png");
+  image_target.src=dataURL;
+  orig_src.src=image_target.src;
+
+  
+  
+  $(image_target).bind("load",function() {
+    $(this).css({
+      width:width,
+      height:height
+    }).unbind('load').parent().css({
+      top:$('.overlay').offset().top- $('.crop-wrapper').offset().top,
+      left:$('.overlay').offset().left- $('.crop-wrapper').offset().left
+    })
+  });
+    //window.open(crop_canvas.toDataURL("image/png"));
+    $(".resize-handle").hide();
+  }
+  
+
+  init();
 };
+
+// Kick everything off with the target image
 resizeableImage($('.resize-image'));
