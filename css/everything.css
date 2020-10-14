@@ -258,6 +258,11 @@ span{
   color:black;
 }
 
+#rm{
+  border-color: #fff;
+  color: #fff;
+}
+
 .crop-wrapper {
   background-color:rgba(0,0,0,0.1);
   position:relative;
