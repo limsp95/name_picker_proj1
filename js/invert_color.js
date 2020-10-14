@@ -8,6 +8,16 @@ $("#go").hover(function(){
   
   $(this).css({"border-color":$('#headline').css("color"), "color":$('#headline').css("color"), "background-color": "transparent"});
  });
+
+$("#save").hover(function(){
+
+      var current_headline_hex = rgb2hex($('#headline').css("color"));
+      no1 = invertColor(current_headline_hex, 1);
+  $(this).css({"color": no1, "background-color": current_headline_hex});
+}, function(){
+  
+  $(this).css({"border-color":$('#headline').css("color"), "color":$('#headline').css("color"), "background-color": "transparent"});
+ });
 }
 // rgb to hex
 function rgb2hex(rgb) {
@@ -55,4 +65,4 @@ function padZero(str, len) {
 
 window.setInterval(function(){
   rerun()
-}, 10000);
+}, 1000);

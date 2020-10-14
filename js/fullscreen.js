@@ -24,6 +24,7 @@ function myFunction(x) {
     document.exitFullscreen();
     // x.classList.toggle("fa-eye-slash");
     $(".fa-chevron-circle-down").hide();
+    $('body').css({"overflow-y": "auto"});
     
   } else {
   }
